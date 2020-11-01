@@ -1,0 +1,86 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hero - Admin</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <script src="./js/jquery-1.12.4.js"></script>
+    <script>
+        function uploadImage() {
+            const formData = new FormData();
+            const file = $('#img')[0].files[0];
+            formData.append('avatar', file);
+            $.ajax({
+                type: "post",
+                url: "http://127.0.0.1:3001/uploadFile",
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (response) {
+                    $('#photo').prop('src', 'http://127.0.0.1:3001/' + response.src)
+                }
+            });
+        }
+
+
+        function addHero() {
+            const name = $('#name').val();
+            const gender = $('input:radio:checked').val();
+            const img = $('#photo').prop('src');
+            $.ajax({
+                type: "post",
+                url: "http://127.0.0.1:3001/addHero",
+                data: { name, gender, img },
+                success: function (response) {
+                    if (response.code === 200) {
+                        window.location.href = './index.html'
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="page-header container">
+            <h1>王者荣耀 <small>英雄管理器</small></h1>
+        </div>
+    </header>
+    <div class="container hero-list">
+        <form id='myform'>
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td>姓名：</td>
+                        <td><input type="text" name="name" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>性别：</td>
+                        <td>
+                            <input id="man" name="gender" value="男" type="radio" checked>
+                            <label for="man">男</label>
+                            <input name="gender" value="女" type="radio" id="female ">
+                            <label for="female ">女</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>头像：</td>
+                        <td>
+                            <img src="./images/default.png" alt="" id="photo" width="100"
+                                style='border: 1px solid #ccc;margin-bottom: 5px;'>
+                            <input type="file" id="img" onchange="uploadImage()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="button" id="sub" value="新增" onclick="addHero()"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>

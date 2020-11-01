@@ -1,0 +1,128 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0 0;
+}
+.wraper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-image: url('../images/login-bg.png');
+  background-size: 100% 100%;
+}
+.wraper .container {
+  width: 368px;
+}
+.wraper .container .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.wraper .container .logo .icon {
+  width: 95px;
+}
+.wraper .container .logo .title {
+  font-size: 33px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: bold;
+  margin-left: 10px;
+}
+.wraper .container .input-container {
+  margin-top: 23px;
+  font-size: 16px;
+  width: 100%;
+}
+.wraper .container .input-container .phone,
+.wraper .container .input-container .code {
+  position: relative;
+  margin-bottom: 23px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+.wraper .container .input-container .phone input,
+.wraper .container .input-container .code input {
+  height: 40px;
+  width: 100%;
+  border: 0;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding-left: 36px;
+  box-sizing: border-box;
+}
+.wraper
+  .container
+  .input-container
+  .phone
+  input::-webkit-input-placeholder,
+.wraper
+  .container
+  .input-container
+  .code
+  input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+.wraper .container .input-container .phone .icon,
+.wraper .container .input-container .code .icon {
+  width: 16px;
+  position: absolute;
+  left: 12px;
+  top: 14px;
+}
+.wraper .container .input-container .validate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+.wraper .container .input-container .validate .get-code {
+  margin-left: 8px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  min-width: 102px;
+}
+.wraper .container .login-btn {
+  width: 100%;
+}
+.btn {
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+#login-err-msg {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+  margin-top: -10px;
+}

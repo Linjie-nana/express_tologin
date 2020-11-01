@@ -1,0 +1,98 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hero - Admin</title>
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/template-web.js"></script>
+  <script>
+    function gogogo() {
+      $.ajax({
+        type: "post",
+        headers: {
+          'Authorization': window.sessionStorage.getItem('token') // 把token放到请求头
+        },
+        url: "http://127.0.0.1:3000/index",
+        success: function (response) {
+
+          //这里获取token判断，如果token错了就返回202，直接转跳走
+          if (response.code === 202) {
+            location.href = './login.html'
+          }
+          // 如果没有错则继续进行
+          else {
+            const renderReuslt = template('heroListTemplate', response);
+            $('#tbody').html(renderReuslt);
+          }
+
+        }
+      });
+    }
+    gogogo();
+
+
+    function del(num) {
+      $.ajax({
+        type: "get",
+        data: {
+          id: num
+        },
+
+        url: "http://127.0.0.1:3000/delete",
+        success: function (res) {
+          console.log(res);
+          gogogo();
+        }
+      })
+    }
+
+    // function change(id) {
+    //   location.href = `./edit.html?id=${id}`
+    // }
+  </script>
+
+  <script type="text/html" id="heroListTemplate">
+    {{each data item index}}
+    <tr>
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.gender}}</td>
+      <td><img style="width: 50px;" src="{{item.img}}"></td>
+      <td>
+        <a href="#"onclick='change({{item.id}})'>修改</a>
+        <a href="javascript:;" onclick='del({{item.id}})'>删除</a>
+      </td>
+    </tr>
+    {{/each}}
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="page-header container">
+      <h1>王者荣耀 <small>英雄管理器</small></h1>
+    </div>
+  </header>
+  <div class="container hero-list">
+    <a class="btn btn-success pull-right" href="./add.html">添加英雄</a>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>名称</th>
+          <th>性别</th>
+          <th>头像</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+
+      <tbody id="tbody">
+
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

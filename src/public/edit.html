@@ -1,0 +1,122 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hero - Admin</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <script src="./lib/jquery-1.12.2.js"></script>
+    <script src="./lib/template-web.js"></script>
+    <script>
+        //获取url
+        let test = window.location.href;
+        let idd = test.lastIndexOf("=");
+        //截取id数据
+        test = test.substring(idd + 1);
+
+        function gogogo() {
+            $.ajax({
+                type: "get",
+                data: {
+                    id: test
+                },
+                url: "http://127.0.0.1:3001/getHeroById",
+                success: function (response) {
+                    const renderReuslt = template('heroListTemplate', response);
+                    $('.table-hover').html(renderReuslt);
+                }
+            });
+        }
+        gogogo();
+
+        function uploadImage() {
+            const formData = new FormData();
+            const file = $('#img')[0].files[0];
+            formData.append('avatar', file);
+            $.ajax({
+                type: "post",
+                url: "http://127.0.0.1:3001/uploadFile",
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (response) {
+                    $('#photo').prop('src', 'http://127.0.0.1:3001/' + response.src)
+                }
+            });
+        }
+
+
+        function changeHero() {
+            const id = test;
+            const name = $('#name').val();
+            const gender = $('input:radio:checked').val();
+            const img = $('#photo').prop('src');
+            $.ajax({
+                type: "post",
+                url: "http://127.0.0.1:3001/updateHero",
+                data: { id, name, gender, img },
+                success: function (response) {
+                    console.log(response);
+                    if (response.code === 200) {
+                        window.location.href = './index.html'
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script type="text/html" id="heroListTemplate">
+        <tbody>
+            <tr>
+                <td>姓名：</td>
+                <td><input type="text" name="name" id="name" value='{{data.name}}'></td>
+            </tr>
+            <tr>
+                <td>性别：</td>
+                <td>
+                    
+                     {{if data.gender === '男'}}
+                     <input id="man" name="gender" value="男" type="radio" checked>
+                     <label for="man">男</label>
+                     <input name="gender" value="女" type="radio" id="female ">
+                     <label for="female ">女</label>
+                                {{else}}
+                    <input id="man" name="gender" value="男" type="radio" >
+                    <label for="man">男</label>
+                    <input name="gender" value="女" type="radio" id="female " checked>
+                    <label for="female ">女</label>
+                                {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td>头像：</td>
+                <td>
+                    <img src="{{data.img}}" alt="" id="photo" width="100"
+                        style='border: 1px solid #ccc;margin-bottom: 5px;'>
+                    <input type="file" id="img" onchange="uploadImage()">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="button" id="sub" value="新增" onclick="changeHero()"></td>
+            </tr>
+        </tbody>
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="page-header container">
+            <h1>王者荣耀 <small>英雄管理器</small></h1>
+        </div>
+    </header>
+    <div class="container hero-list">
+        <form id='myform'>
+            <table class="table table-hover">
+
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>

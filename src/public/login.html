@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>登录</title>
+  <link rel="stylesheet" href="./css/login.css">
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script>
+    function login() {
+      const userName = $('#userName').val();
+      const userPwd = $('#userPwd').val();
+      $.ajax({
+        type: 'post',
+        url: 'http://127.0.0.1:3000/login',
+        data: {
+          userName, userPwd
+        },
+        success: function (response) {
+          $('#tips').html(response.msg);
+          if (response.code == '200') {
+
+            // 当发送数据时候将token的密钥加入到表头
+            window.sessionStorage.setItem('token', response.token)
+            alert('登录成功')
+            location.href = "./index.html";
+          }
+        },
+      })
+    }
+
+
+  </script>
+</head>
+
+<body>
+  <div class="wraper">
+    <div class="container">
+      <div class="logo">
+        <img class="icon" src="./images/logo.png" />
+        <div class="title">英雄管理系统</div>
+      </div>
+      <div class="input-container">
+        <div class="phone">
+          <img class="icon" src="./images/phone.png" />
+          <input placeholder="用户名" type="text" id="userName" name="userName" />
+        </div>
+        <div class="validate">
+          <div class="code">
+            <img class="icon" src="./images/mail.png" />
+            <input placeholder="密码" type="password" id="userPwd" name="userPwd" />
+          </div>
+        </div>
+      </div>
+      <div id="tips"></div>
+      <input type="submit" class="btn" value="登录" onclick="login()">
+    </div>
+  </div>
+</body>
+
+</html>
